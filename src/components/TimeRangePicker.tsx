@@ -41,11 +41,11 @@ export const TimeRangePicker: React.FC<TimeRangePickerProps> = ({ days, onChange
       </div>
       <div className="w-1/3">
         <label className="block text-sm font-medium text-gray-700">開始時間</label>
-        <TimeSelect value={startTime} onChange={handleStartTimeChange} showMinutes label="" className="w-full" />
+        <TimeSelect value={startTime} onChange={handleStartTimeChange} showMinutes label="開始時間" className="w-full" />
       </div>
       <div className="w-1/3">
         <label className="block text-sm font-medium text-gray-700">結束時間</label>
-        <TimeSelect value={endTime} onChange={handleEndTimeChange} showMinutes label="" className="w-full" />
+        <TimeSelect value={endTime} onChange={handleEndTimeChange} showMinutes label="結束時間" className="w-full" />
       </div>
     </div>
   );

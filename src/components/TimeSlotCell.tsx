@@ -12,7 +12,6 @@ interface TimeSlotCellProps {
   day: string;
   showNames?: boolean;
   onUpdateEmployees?: (employeeIds: string[]) => void;
-  employeeScheduleVersion: number; // Added version prop
 }
 
 export function TimeSlotCell({ 
@@ -22,8 +21,7 @@ export function TimeSlotCell({
   employees = [], 
   day,
   showNames = false,
-  onUpdateEmployees,
-  employeeScheduleVersion // Use version prop
+  onUpdateEmployees
 }: TimeSlotCellProps) {
   const availableEmployees = employees.filter(employee => 
     employee.availability.some(a => 
@@ -74,7 +72,7 @@ export function TimeSlotCell({
   }
 
   return (
-    <div className="h-16 border-t border-gray-200 p-2" key={employeeScheduleVersion}> {/* Added key prop */}
+    <div className="h-16 border-t border-gray-200 p-2">
       <div className={`h-full rounded-md p-2 ${statusColor}`}>
         {showNames ? (
           <EmployeeList

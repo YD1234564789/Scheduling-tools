@@ -40,7 +40,7 @@ export function EmployeeManagement({ employees, onAdd, onDelete }: EmployeeManag
 
   return (
       <form onSubmit={handleSubmit} className="space-y-4 bg-white p-6 rounded-lg shadow">
-				<h3 className="text-lg font-semibold mb-4">新增人員</h3>
+				<h3 className="text-lg font-semibold mb-4">新增員工</h3>
         <div>
           <label className="block text-sm font-medium text-gray-700">
             員工姓名
@@ -75,11 +75,10 @@ export function EmployeeManagement({ employees, onAdd, onDelete }: EmployeeManag
             </button>
           </div>
         </div>
-				  <label className="block text-sm font-medium text-gray-700">
-            員工列表
-          </label>
-          <EmployeeList employees={employees} onDelete={onDelete} className="mt-1"/>
+				<div className="space-y-2">
+          <h3 className="text-sm font-medium text-gray-700">員工列表</h3>
+          <EmployeeList employees={employees} onDelete={onDelete} />
+        </div>
       </form>
-
   );
 }

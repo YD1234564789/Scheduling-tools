@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import { DaySchedule, TimeInterval, Employee } from '../types';
 import { TimeSlotCell } from './TimeSlotCell';
 import { ScheduleHeader } from './ScheduleHeader';
@@ -27,21 +27,20 @@ export function ScheduleGrid({
   const [interval, setInterval] = useState<TimeInterval>('60');
   const [timeSlots, setTimeSlots] = useState<string[]>([]);
   const [showNames, setShowNames] = useState(false);
-  const [employeeScheduleVersion, setEmployeeScheduleVersion] = useState(0); // Added version tracker
 
   useEffect(() => {
     setTimeSlots(generateTimeSlots(interval, businessHours.start, businessHours.end));
   }, [interval, businessHours]);
 
-  const handleUpdateEmployees = useCallback((day: string, time: string) => (employeeIds: string[]) => {
+  const handleUpdateEmployees = (day: string, time: string) => (employeeIds: string[]) => {
     onUpdateEmployees?.(day, time, employeeIds);
-    setEmployeeScheduleVersion(prev => prev + 1); // Increment version on update
-  }, [onUpdateEmployees]);
+  };
 
   const handleClearSchedule = () => {
+    // Clear all employee schedules
     schedule.forEach(day => {
       timeSlots.forEach(time => {
-        handleUpdateEmployees(day.day, time)([]);
+        onUpdateEmployees?.(day.day, time, []);
       });
     });
   };
@@ -84,6 +83,7 @@ export function ScheduleGrid({
             <ScheduleHeader days={days} />
             
             <div className="grid grid-cols-[100px_repeat(7,1fr)]">
+              {/* 時間欄 */}
               <div className="border-r border-gray-200">
                 {timeSlots.map((time) => (
                   <div
@@ -95,6 +95,7 @@ export function ScheduleGrid({
                 ))}
               </div>
 
+              {/* 日期欄 */}
               {schedule.map((day) => (
                 <div key={day.day} className="border-r border-gray-200 last:border-r-0">
                   {timeSlots.map((time) => {
@@ -112,7 +113,6 @@ export function ScheduleGrid({
                         day={day.day}
                         showNames={showNames}
                         onUpdateEmployees={handleUpdateEmployees(day.day, time)}
-                        employeeScheduleVersion={employeeScheduleVersion} // Pass version to TimeSlotCell
                       />
                     );
                   })}

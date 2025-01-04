@@ -10,9 +10,9 @@ interface EmployeeListProps {
 export function EmployeeList({ employees, onDelete }: EmployeeListProps) {
   if (employees.length === 0) {
     return (
-      <div className="text-sm text-gray-500 text-center py-4">
+      <p className="text-sm text-gray-500 text-center py-4">
         尚未新增任何員工
-      </div>
+      </p>
     );
   }
 

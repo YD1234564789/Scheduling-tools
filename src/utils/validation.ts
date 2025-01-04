@@ -14,21 +14,21 @@ export function validateTimeRange(
   if (startValue < businessStartValue) {
     return {
       type: 'START_BEFORE_BUSINESS',
-      message: `開始時間必須在營業時間後 (${businessStart})`
+      message: `Start time must be after business hours start (${businessStart})`
     };
   }
 
   if (endValue > businessEndValue) {
     return {
       type: 'END_AFTER_BUSINESS',
-      message: `結束時間必須在營業時間前 (${businessEnd})`
+      message: `End time must be before business hours end (${businessEnd})`
     };
   }
 
   if (startValue >= endValue) {
     return {
       type: 'INVALID_RANGE',
-      message: '開始時間要早於結束時間'
+      message: 'End time must be after start time'
     };
   }
 

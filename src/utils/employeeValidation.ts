@@ -2,7 +2,7 @@ import { Employee } from '../types';
 
 export function validateEmployeeName(name: string, existingEmployees: Employee[]): string | null {
   if (!name.trim()) {
-    return '員工姓名必填';
+    return 'Employee name is required';
   }
 
   const normalizedName = name.trim().toLowerCase();
@@ -11,7 +11,7 @@ export function validateEmployeeName(name: string, existingEmployees: Employee[]
   );
 
   if (exists) {
-    return '已存在同名員工';
+    return 'An employee with this name already exists';
   }
 
   return null;
