@@ -52,41 +52,17 @@ export default function App() {
   };
 
   const handleUpdateEmployees = (day: string, time: string, employeeIds: string[]) => {
-    setSchedule(prev => prev.map(d => {
-      if (d.day === day) {
+    setEmployees(prev => prev.map(emp => {
+      if (!employeeIds.includes(emp.id) && emp.availability.some(a => 
+        a.day === day && time >= a.start && time < a.end
+      )) {
         return {
-          ...d,
-          timeSlots: d.timeSlots.map(slot => {
-            if (isTimeInRange(time, slot.start, slot.end)) {
-              return {
-                ...slot,
-                currentStaff: employeeIds.length
-              };
-            }
-            return slot;
-          })
+          ...emp,
+          availability: []
         };
       }
-      return d;
+      return emp;
     }));
-  };
-
-  const handleClearAll = () => {
-    setSchedule([
-      { day: '星期一', timeSlots: [] },
-      { day: '星期二', timeSlots: [] },
-      { day: '星期三', timeSlots: [] },
-      { day: '星期四', timeSlots: [] },
-      { day: '星期五', timeSlots: [] },
-      { day: '星期六', timeSlots: [] },
-      { day: '星期日', timeSlots: [] },
-    ]);
-  };
-
-  const handleClearDay = (day: string) => {
-    setSchedule(prev => prev.map(d => 
-      d.day === day ? { ...d, timeSlots: [] } : d
-    ));
   };
 
   const handleBusinessHoursChange = (start: string, end: string) => {
@@ -118,13 +94,11 @@ export default function App() {
                 />
               </div>
 
-              <div className="p-6">
+              <div className="">
                 {activeTab === 'requirements' && (
                   <RequirementForm 
                     onSubmit={handleAddRequirement}
                     businessHours={businessHours}
-                    onClearAll={handleClearAll}
-                    onClearDay={handleClearDay}
                   />
                 )}
                 {activeTab === 'schedule' && (
@@ -146,7 +120,7 @@ export default function App() {
 
           <div className="space-y-6">
             <div className="bg-white p-6 rounded-lg shadow">
-              <h2 className="text-xl font-semibold mb-4">每週排班</h2>
+              <h2 className="text-xl font-semibold mb-4">週間排班表</h2>
               <ScheduleGrid 
                 schedule={schedule}
                 businessHours={businessHours}

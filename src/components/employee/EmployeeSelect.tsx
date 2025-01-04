@@ -19,9 +19,6 @@ export function EmployeeSelect({ value, onChange, employees }: EmployeeSelectPro
 
   return (
     <div>
-      <label className="block text-sm font-medium text-gray-700">
-        選擇員工
-      </label>
       <select
         value={value}
         onChange={(e) => onChange(e.target.value)}
@@ -29,7 +26,7 @@ export function EmployeeSelect({ value, onChange, employees }: EmployeeSelectPro
           focus:border-blue-500 focus:ring-blue-500"
         required
       >
-				<option value="" selected hidden>請選擇...</option>
+        <option value="">選擇一名員工...</option>
         {uniqueEmployees.map(emp => (
           <option key={emp.id} value={emp.id}>
             {emp.name}

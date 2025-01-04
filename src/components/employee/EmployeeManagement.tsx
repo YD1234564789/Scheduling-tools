@@ -38,12 +38,9 @@ export function EmployeeManagement({ employees, onAdd, onDelete }: EmployeeManag
     setError(null);
   };
 
-  // Use a Set to ensure unique employee IDs
-  const uniqueEmployees = [...new Set(employees.map(emp => emp.id))];
-
   return (
-    <div className="space-y-6">
       <form onSubmit={handleSubmit} className="space-y-4 bg-white p-6 rounded-lg shadow">
+				<h3 className="text-lg font-semibold mb-4">新增人員</h3>
         <div>
           <label className="block text-sm font-medium text-gray-700">
             員工姓名
@@ -69,21 +66,20 @@ export function EmployeeManagement({ employees, onAdd, onDelete }: EmployeeManag
             </div>
             <button
               type="submit"
-              className="inline-flex items-center px-3 py-2 border border-transparent 
+              className="inline-flex items-center px-2 py-1 border border-transparent 
                 text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 
                 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 
                 focus:ring-blue-500"
             >
-              <Plus className="w-4 h-4" />
+              <Plus className="w-3 h-3" />
             </button>
           </div>
         </div>
+				  <label className="block text-sm font-medium text-gray-700">
+            員工列表
+          </label>
+          <EmployeeList employees={employees} onDelete={onDelete} className="mt-1"/>
       </form>
 
-      <div className="space-y-2">
-        <h3 className="text-sm font-medium text-gray-700">員工列表</h3>
-        <EmployeeList employees={employees} onDelete={onDelete} />
-      </div>
-    </div>
   );
 }

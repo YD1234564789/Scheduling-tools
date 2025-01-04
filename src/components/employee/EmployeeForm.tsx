@@ -30,20 +30,17 @@ export function EmployeeForm({ onSubmit, employees }: EmployeeFormProps) {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4 bg-white p-6 rounded-lg shadow">
-      <div>
-        <EmployeeSelect
-          value={selectedEmployee}
-          onChange={setSelectedEmployee}
-          employees={employees}
-        />
-      </div>
+			<h3 className="text-lg font-semibold mb-4">加入人員</h3>
+      <EmployeeSelect
+        value={selectedEmployee}
+        onChange={setSelectedEmployee}
+        employees={employees}
+      />
 
-      <div>
-        <AvailabilityInput
-          availability={availability}
-          onChange={setAvailability}
-        />
-      </div>
+      <AvailabilityInput
+        availability={availability}
+        onChange={setAvailability}
+      />
 
       <button
         type="submit"

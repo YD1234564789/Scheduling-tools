@@ -21,7 +21,7 @@ export function AvailabilityInput({ availability, onChange }: AvailabilityInputP
     const endMinutes = timeToMinutes(end);
     
     if (startMinutes >= endMinutes) {
-      setError('End time must be after start time');
+      setError('結束時間必須在開始時間之後');
       return false;
     }
     
@@ -60,7 +60,7 @@ export function AvailabilityInput({ availability, onChange }: AvailabilityInputP
     <div className="space-y-4">
       <div className="flex gap-4">
         <div className="flex-1">
-          <label className="block text-sm font-medium text-gray-700">星期</label>
+          <label className="block text-sm font-medium text-gray-700">日期</label>
           <select
             value={selectedDay}
             onChange={(e) => setSelectedDay(e.target.value)}
@@ -73,7 +73,7 @@ export function AvailabilityInput({ availability, onChange }: AvailabilityInputP
         </div>
 
         <div className="flex-1">
-          <label className="block text-sm font-medium text-gray-700">區間</label>
+          <label className="block text-sm font-medium text-gray-700">時間範圍</label>
           <div className="flex items-center gap-2 mt-1">
             <TimeSelect
               value={timeRange.start}

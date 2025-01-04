@@ -11,7 +11,8 @@ interface TimeSlotCellProps {
   employees?: Employee[];
   day: string;
   showNames?: boolean;
-  onUpdateEmployees?: (day: string, time: string, employeeIds: string[]) => void;
+  onUpdateEmployees?: (employeeIds: string[]) => void;
+  employeeScheduleVersion: number; // Added version prop
 }
 
 export function TimeSlotCell({ 
@@ -21,9 +22,10 @@ export function TimeSlotCell({
   employees = [], 
   day,
   showNames = false,
-  onUpdateEmployees
+  onUpdateEmployees,
+  employeeScheduleVersion // Use version prop
 }: TimeSlotCellProps) {
-  const scheduledEmployees = employees.filter(employee => 
+  const availableEmployees = employees.filter(employee => 
     employee.availability.some(a => 
       a.day === day && isTimeInRange(time, a.start, a.end)
     )
@@ -31,14 +33,19 @@ export function TimeSlotCell({
 
   const handleRemoveEmployee = (employeeId: string) => {
     if (onUpdateEmployees) {
-      const updatedEmployeeIds = scheduledEmployees
+      const updatedEmployeeIds = availableEmployees
         .filter(emp => emp.id !== employeeId)
         .map(emp => emp.id);
-      onUpdateEmployees(day, time, updatedEmployeeIds);
+      onUpdateEmployees(updatedEmployeeIds);
     }
   };
 
-  const currentStaff = scheduledEmployees.length;
+  // If no slot and no available employees, render empty cell
+  if (!slot && availableEmployees.length === 0) {
+    return <div className="h-16 border-t border-gray-200" />;
+  }
+
+  const currentStaff = availableEmployees.length;
   const requiredStaff = slot?.requiredStaff || 0;
   const isPartialSlot = timeInterval === '60' && slot && isPartialHourSlot(time, slot.start, slot.end);
 
@@ -67,20 +74,18 @@ export function TimeSlotCell({
   }
 
   return (
-    <div className="h-16 border-t border-gray-200 p-2">
+    <div className="h-16 border-t border-gray-200 p-2" key={employeeScheduleVersion}> {/* Added key prop */}
       <div className={`h-full rounded-md p-2 ${statusColor}`}>
         {showNames ? (
           <EmployeeList
-            employees={scheduledEmployees}
+            employees={availableEmployees}
             onRemove={handleRemoveEmployee}
             availableEmployees={employees}
-            day={day}
-            time={time}
           />
         ) : (
           <div className="flex items-center gap-1 text-sm">
             <StatusIcon className="w-4 h-4" />
-            <span>{currentStaff > 0 ? `${currentStaff}/${requiredStaff}` : `0/${requiredStaff}`}</span>
+            <span>{slot ? `${currentStaff}/${requiredStaff}` : `0/${requiredStaff}`}</span>
           </div>
         )}
       </div>

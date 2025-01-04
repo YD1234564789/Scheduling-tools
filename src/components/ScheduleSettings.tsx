@@ -44,8 +44,8 @@ export function ScheduleSettings({
           onChange={(e) => onIntervalChange(e.target.value as TimeInterval)}
           className="rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
         >
-          <option value="30">30分鐘</option>
-          <option value="60">1小時</option>
+          <option value="30">30 分鐘</option>
+          <option value="60">1 小時</option>
         </select>
       </div>
       
